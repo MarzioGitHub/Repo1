@@ -10,5 +10,11 @@ pipeline {
         echo 'Mail Inviata'
       }
     }
+    stage('SecondStage') {
+      steps {
+        fileExists 'TestFile1.sh'
+        sh './TestFile1.sh'
+      }
+    }
   }
 }
