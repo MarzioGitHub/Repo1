@@ -11,9 +11,26 @@ pipeline {
       }
     }
     stage('SecondStage') {
+      agent any
       steps {
         fileExists 'TestFile1.sh'
-        sh './TestFile1.sh'
+      }
+    }
+    stage('NotExist') {
+      parallel {
+        stage('NotExist') {
+          agent any
+          steps {
+            writeFile(file: 'TestWrite.txt', text: 'File creato dalla Pipeline.')
+          }
+        }
+        stage('Exist') {
+          agent any
+          steps {
+            sh '''#!/bin/sh
+echo START ESECUZIONE SCRIPT;'''
+          }
+        }
       }
     }
   }
