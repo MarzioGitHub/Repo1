@@ -6,8 +6,11 @@ pipeline {
       steps {
         echo '"Start Pipeline"'
         sh 'echo PATH = ${PATH}'
-        mail(subject: 'JenkinsPipeline', body: 'Mail scritta da uno step della pipeline di Marzio.', from: 'marzio.sottotetti@gmail.com', to: 'armando.calabro@atos.net')
       }
     }
   }
+  post {
+        always {
+            emailext body: 'Test email inviata dalla Pipeline di Marzio', recipientProviders: 'armando.calabro@atos.net', subject: 'JenkinsPipelineTest'
+        }
 }
